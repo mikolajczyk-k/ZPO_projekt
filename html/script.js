@@ -1,14 +1,17 @@
 const slides = document.querySelectorAll(".slide")
+const nextButton = document.querySelector(".next")
+const previousButton = document.querySelector(".prev")
 
-showSlide(0)
+let slideshowFlag = false
 
-function showSlide(index) {
-    if (index >= slides.length) {
-        return showSlide(0);
+
+
+function showSlide() {
+        for (i=0; i< slides.length; i++){
+            slides[index].classList.add('visible');
+            setTimeout(function() {
+                slides[index].classList.remove('visible');
+                showSlide(index + 1); 
+            }, 15000); 
+        }
     }
-    slides[index].classList.add('visible');
-    setTimeout(function() {
-        slides[index].classList.remove('visible');
-        showSlide(index + 1); 
-    }, 15000); 
-}
