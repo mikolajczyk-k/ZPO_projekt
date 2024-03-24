@@ -16,7 +16,7 @@
         font-family: Arial, sans-serif;
         position: relative;
         min-height: 100vh; /* Ensure the body covers the full height of the viewport */
-        background-color: var(--accent-color-1);
+        background-color: var(--primary-color);
     }
 
     /* Style for top navigation */
@@ -55,19 +55,19 @@
     }
 
     .topnav nav a:hover{
-        background-color: var(--accent-color-1); /* Example color */
+        background-color: var(--accent-color-1); 
         color: var(--primary-color);
     }
 
     /* Style for active link */
     .topnav nav a.active {
-        background-color: var(--accent-color-1); /* Example color */
+        background-color: var(--accent-color-1); 
         color: var(--primary-color);
     }
 
     /* Style for login and sign up buttons */
     .loginButton {
-        background-color: var(--accent-color-1); /* Example color */
+        background-color: var(--accent-color-1);
         color: var(--primary-color);
         border: none;
         padding: 10px 20px;
@@ -77,7 +77,7 @@
     }
 
     .signupButton {
-        background-color: var(--accent-color-2); /* Example color */
+        background-color: var(--accent-color-2); 
         color: var(--primary-color);
         border: none;
         padding: 10px 20px;
@@ -86,10 +86,55 @@
         border-radius: 5px;
     }
 
+    .slideshowContainer {
+        position: absolute;
+        top: 50%; /* Position the top of the slideshow container at the vertical center of the viewport */
+        left: 50%; /* Position the left side of the slideshow container at the horizontal center of the viewport */
+        transform: translate(-50%, -50%); /* Center the slideshow container both horizontally and vertically */
+        width: 100%;
+        max-width: 1600px; /* Adjust the maximum width as needed */
+        margin: auto;
+    }
+    
+    /* Style for individual slides */
+    .slide {
+        display: none;
+        transition: opacity 5s ease;
+    }
+
+    .visible {
+        display: block;
+    }
+    
+    /* Style for slide content */
+    .slideContent {
+        text-align: center;
+        padding: 20px;
+    }
+    
+    /* Style for slide controls */
+    .prev, .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        padding: 16px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .prev {
+        left: 0;
+    }
+    
+    .next {
+        right: 0;
+    }
+    
 
     /* Style for footer */
     footer {
-        background-color: var(--secondary-color); /* Example color */
+        background-color: var(--secondary-color); 
         color: var(--primary-color);
         text-align: center;
         padding: 20px 0;
