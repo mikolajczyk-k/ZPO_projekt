@@ -1,4 +1,4 @@
-package com.nextbank.nextbank;
+package com.nextbank.nextbank.model;
 
 import jakarta.persistence.*;
 import lombok.*;
