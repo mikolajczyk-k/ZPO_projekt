@@ -1,4 +1,5 @@
 package com.nextbank.nextbank.service;
+
 import com.nextbank.nextbank.model.Account;
 import com.nextbank.nextbank.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
