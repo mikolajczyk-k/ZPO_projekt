@@ -1,13 +1,13 @@
 package com.nextbank.nextbank.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
-
-
-
+import java.util.Set;
 
 
 @Setter
@@ -38,11 +38,6 @@ public class Account {
 
     private String IBAN;
 
-    @ManyToMany
-    @JoinTable(name = "account_client",
-                joinColumns = @JoinColumn(name= "account_id"),
-                inverseJoinColumns = @JoinColumn(name = "client_id"))
-    private List<Client> owners;
 
     private BigDecimal balance;
 
@@ -51,5 +46,9 @@ public class Account {
 
     @OneToMany(mappedBy = "recipient")
     private List<Transaction> incomingTransactions;
+
+
+    @ManyToMany(mappedBy = "accounts", fetch = FetchType.LAZY)
+    private Set<Client> owners;
 
 }

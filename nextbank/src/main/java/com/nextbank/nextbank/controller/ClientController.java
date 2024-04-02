@@ -26,7 +26,7 @@ public class ClientController {
 
     @GetMapping
     public ResponseEntity<List<Client>> getAllClients() {
-        List<Client> clients = clientRepository.findAll();
+        List<Client> clients = clientService.getAllClients();
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
@@ -38,7 +38,7 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<Client> addClient(@RequestBody Client client){
-        Client savedClient = clientRepository.save(client);
+        Client savedClient = clientService.saveClient(client);
         return new ResponseEntity<>(savedClient, HttpStatus.CREATED);
     }
 }
