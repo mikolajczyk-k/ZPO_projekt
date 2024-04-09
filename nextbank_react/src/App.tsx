@@ -1,13 +1,10 @@
 //style
-import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  Routes,
-  Link,
-  NavLink,
   RouterProvider,
 } from "react-router-dom";
 
@@ -17,13 +14,17 @@ import About from "./pages/About";
 
 //layouts
 import RootLayout from "./layouts/RootLayout";
-import DashboardLayout from "./layouts/DashboardLayout";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
+      <Route path="home" element={<Home />} />
       <Route path="about" element={<About />} />
+      <Route path="login" element={<Login />} />
+      <Route path="signup" element={<SignUp />} />
     </Route>
   )
 );

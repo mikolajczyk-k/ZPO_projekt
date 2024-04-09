@@ -1,43 +1,22 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+
+//components
+import TopNav from "../components/TopNav";
+import Footer from "../components/Footer";
 
 const RootLayout = () => {
   return (
-    <div className="root-layout">
+    <div className="d-flex flex-column min-vh-100">
       <header>
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
-          <div className="container-fluid">
-            <a className="navbar-brand" href="/">
-              Nextbank
-            </a>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/">
-                    Home
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/about">
-                    About
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
-            <button type="button" className="btn btn-success">
-              Sign Up
-            </button>
-            <button type="button" className="btn btn-success">
-              Log In
-            </button>
-          </div>
-        </nav>
+        <TopNav />
       </header>
-      <main>
+      <div style={{ flexGrow: 1 }}>
         <Outlet />
-      </main>
+      </div>
+      <Footer />
     </div>
   );
 };
