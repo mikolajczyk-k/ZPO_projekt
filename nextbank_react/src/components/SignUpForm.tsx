@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import "bootstrap/dist/css/bootstrap.min.css"
 import styles from "../styles/PeselInput.module.css"
 
-const SignUpForm = () => {
+const SignUpForm: React.FC = () => {
                 const navigate = useNavigate();
 
   return (

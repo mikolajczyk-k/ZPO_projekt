@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { useNavigate } from 'react-router-dom'
 import { Form, Button, Container, Row, Col } from 'react-bootstrap'
 
-const LoginForm = () => {
+const LoginForm: React.FC = () => {
 
     const navigate = useNavigate();
 

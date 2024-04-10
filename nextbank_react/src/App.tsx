@@ -12,13 +12,15 @@ import {
 //pages
 import Home from "./pages/Home";
 import About from "./pages/About";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import DashboardMainPage from "./pages/DashboardMainPage";
 
 //layouts
 import RootLayout from "./layouts/RootLayout";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
 import DashboardLayout from "./layouts/DashboardLayout";
 import HomeLayout from "./layouts/HomeLayout";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,7 +32,9 @@ const router = createBrowserRouter(
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
       </Route>
-      <Route path="dashboard" element={<DashboardLayout />}/>
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route index element={<DashboardMainPage />}/>
+      </Route>
     </Route>
   )
 );
