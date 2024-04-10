@@ -2,6 +2,9 @@ import React from 'react'
 import { Form, Container, Col, Row, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
+import "bootstrap/dist/css/bootstrap.min.css"
+import styles from "../styles/PeselInput.module.css"
+
 const SignUpForm = () => {
                 const navigate = useNavigate();
 
@@ -50,7 +53,7 @@ const SignUpForm = () => {
 
             <Form.Group className="mb-3" controlId="formBasicPesel">
                 <Form.Label>Pesel</Form.Label>
-                <Form.Control type="number" placeholder="PESEL" />
+                <Form.Control type="number" placeholder="PESEL" className={styles.numberInput}/>
             </Form.Group>
 
             <div className="d-grid gap-2">

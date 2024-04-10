@@ -16,6 +16,7 @@ import About from "./pages/About";
 import RootLayout from "./layouts/RootLayout";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import DashboardLayout from "./layouts/DashboardLayout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
       <Route path="about" element={<About />} />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<SignUp />} />
+      <Route path="dashboard" element={<DashboardLayout />}/>
     </Route>
   )
 );
