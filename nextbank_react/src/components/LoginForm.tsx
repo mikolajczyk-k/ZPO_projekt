@@ -34,7 +34,7 @@ const LoginForm = () => {
                 Don't have an account yet?
               </Col>
               <Col xs="auto">
-                <Button variant="outline-success" onClick={() => navigate('/signup')}>Sign Up</Button>
+                <Button variant="outline-success" onClick={() => navigate('home/signup')}>Sign Up</Button>
               </Col>
             </Row>
           </Form>

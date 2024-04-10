@@ -67,7 +67,7 @@ const SignUpForm = () => {
                 Already have an account?
                 </Col>
                 <Col xs="auto">
-                <Button variant="outline-success" onClick={() => navigate('/login')}>Login</Button>
+                <Button variant="outline-success" onClick={() => navigate('/home/login')}>Login</Button>
                 </Col>
             </Row>
         </Form>

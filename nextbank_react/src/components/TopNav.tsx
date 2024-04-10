@@ -17,7 +17,7 @@ const TopNav: React.FC = () => {
             <Nav.Link href="/home" style={{ color: "#fff" }}>
               Home
             </Nav.Link>
-            <Nav.Link href="/about" style={{ color: "#fff" }}>
+            <Nav.Link href="/home/about" style={{ color: "#fff" }}>
               About
             </Nav.Link>
           </Nav>
@@ -26,7 +26,7 @@ const TopNav: React.FC = () => {
               variant="success"
               className="me-2"
               onClick={() => {
-                navigate("/login");
+                navigate("/home/login");
               }}
             >
               Login
@@ -35,7 +35,7 @@ const TopNav: React.FC = () => {
               variant="outline-success"
               
               onClick={() => {
-                navigate("/signup");
+                navigate("/home/signup");
               }}
             >
               Sign Up
