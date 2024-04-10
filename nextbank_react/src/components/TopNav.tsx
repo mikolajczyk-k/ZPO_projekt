@@ -33,11 +33,7 @@ const TopNav: React.FC = () => {
             </Button>
             <Button
               variant="outline-success"
-              style={{
-                color: "#fff",
-                borderColor: "green",
-                backgroundColor: "#333",
-              }}
+              
               onClick={() => {
                 navigate("/signup");
               }}
