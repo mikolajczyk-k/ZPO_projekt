@@ -1,11 +1,15 @@
-import React from 'react'
+import React from "react";
+import { Container } from "react-bootstrap";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/Dashboard.css";
 
 const DashboardMain = () => {
   return (
-    <div>
-      Main Page
+    <div className="main-dashboard">
+      <Container fluid>Main Page</Container>
     </div>
-  )
-}
+  );
+};
 
-export default DashboardMain
+export default DashboardMain;

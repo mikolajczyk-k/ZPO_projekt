@@ -1,0 +1,20 @@
+:root {
+    --fresh_mint: #00B37E;
+    --slate_stone: #62757F;
+    --sky_light: #62757F;
+    --sunlit_gold: #FFD700;
+    --earthen_silver: #E5E5E5;
+}
+
+.side-nav {
+    background-color: var(--fresh_mint);
+    color: var(--earthen_silver);
+    padding: 20px;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+
+.brand-tab{
+    margin-bottom: 10px;
+}
+
