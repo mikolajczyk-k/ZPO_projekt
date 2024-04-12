@@ -7,6 +7,7 @@
 }
 
 
+
 .side-nav {
     background-color: var(--fresh_mint);
     color: var(--earthen_silver);
@@ -34,5 +35,19 @@
 }
 
 .dashboard-main-accounts{
+    padding-bottom: 10px;
     border-bottom:  1px solid;
+}
+
+.account-tile{
+    border: 2px solid;
+    border-color: var(--fresh_mint);
+    font-size: 18px;
+    margin-bottom: 15px;
+
+}
+
+.account-tile-header{
+    background-color: var(--fresh_mint);
+    color: white;
 }

@@ -6,6 +6,7 @@ import "../styles/Dashboard.css";
 import { BsCreditCard2Back } from "react-icons/bs";
 
 import AccountTile from "../components/AccountTile";
+import AccountTileContainer from "../components/AccountTileContainer";
 
 const DashboardMain = () => {
   return (
@@ -17,30 +18,7 @@ const DashboardMain = () => {
           </Container>
         </Row>
         <Row>
-          <Container>
-            <Row>
-              <AccountTile
-                label="Checking"
-                Icon={<BsCreditCard2Back />}
-                balance="10.000"
-              />
-              <AccountTile
-                label="Checking"
-                Icon={<BsCreditCard2Back />}
-                balance="10.000"
-              />
-              <AccountTile
-                label="Checking"
-                Icon={<BsCreditCard2Back />}
-                balance="10.000"
-              />
-              <AccountTile
-                label="Checking"
-                Icon={<BsCreditCard2Back />}
-                balance="10.000"
-              />
-            </Row>
-          </Container>
+          <AccountTileContainer />
         </Row>
       </Row>
     </Container>
