@@ -7,9 +7,11 @@ interface Props {
   label: string;
   Icon: JSX.Element;
   balance: string | number;
+  onClick: () => void;
+  isSelected: boolean;
 }
 
-const AccountTile: React.FC<Props> = ({ label, Icon, balance }) => {
+const AccountTile: React.FC<Props> = ({ label, Icon, balance, isSelected }) => {
   const sizedIcon = React.cloneElement(Icon, { size: "1.5em" });
   return (
     <Col>

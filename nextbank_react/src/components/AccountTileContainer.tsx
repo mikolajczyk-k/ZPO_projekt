@@ -34,6 +34,8 @@ const AccountTileContainer: React.FC = () => {
               label={tile.label}
               Icon={tile.Icon}
               balance={tile.balance}
+              onClick={() => {}}
+              isSelected={false}
             />
           </Col>
         ))}
