@@ -1,15 +1,16 @@
 :root {
     --fresh_mint: #00B37E;
     --slate_stone: #62757F;
-    --sky_light: #62757F;
+    --sky_light: #B4E1FA;
     --sunlit_gold: #FFD700;
     --earthen_silver: #E5E5E5;
 }
 
+
 .side-nav {
     background-color: var(--fresh_mint);
     color: var(--earthen_silver);
-    padding: 20px;
+    padding: 10px;
     border-top-right-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
   }
@@ -18,3 +19,20 @@
     margin-bottom: 10px;
 }
 
+.side-nav-item{
+    color: #fff;
+    cursor: pointer;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    margin-top: 15px;
+    padding-top: 10px;
+    align-items: center;
+    text-decoration: none;
+
+
+}
+
+.dashboard-main-accounts{
+    border-bottom:  1px solid;
+}

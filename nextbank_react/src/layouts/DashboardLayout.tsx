@@ -12,10 +12,10 @@ const DashboardLayout = () => {
   return (
     <Container fluid>
       <Row>
-        <Col md={2} lg={2} className="p-0">
+        <Col lg={2} className="p-0">
           <DashboardSideNav />
         </Col>
-        <Col className="main-dashboard">
+        <Col lg={10}>
           <Outlet />
         </Col>
       </Row>

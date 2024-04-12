@@ -15,6 +15,10 @@ import About from "./pages/About";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import DashboardMainPage from "./pages/DashboardMainPage";
+import DashboardProfilePage from "./pages/DashboardProfilePage";
+import DashboardAccountsPage from "./pages/DashboardAccountsPage";
+import DashboardHistoryPage from "./pages/DashboardHistoryPage";
+import DashboardSettingsPage from "./pages/DashboardSettingsPage";
 
 //layouts
 import RootLayout from "./layouts/RootLayout";
@@ -34,7 +38,10 @@ const router = createBrowserRouter(
       </Route>
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<DashboardMainPage />} />
-        <Route path="profile" element={<DashboardMainPage />} />
+        <Route path="profile" element={<DashboardProfilePage />} />
+        <Route path="accounts" element={<DashboardAccountsPage />} />
+        <Route path="history" element={<DashboardHistoryPage />} />
+        <Route path="settings" element={<DashboardSettingsPage />} />
       </Route>
     </Route>
   )
