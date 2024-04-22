@@ -1,5 +1,8 @@
 package com.nextbank.nextbank.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.nextbank.nextbank.AccountType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,4 +31,5 @@ public class Account {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client owner;
+
 }

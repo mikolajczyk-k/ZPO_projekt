@@ -33,6 +33,11 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
+    public List<Account> getAccountsByOwnerId(Long ownerId){
+        return accountRepository.findByOwnerId(ownerId);
+    }
+
+
     public Account createAccount(Long clientId, AccountType type, BigDecimal initialBalance){
         Optional<Client> clientOptional = clientRepository.findById(clientId);
         if (!clientOptional.isPresent()) {
