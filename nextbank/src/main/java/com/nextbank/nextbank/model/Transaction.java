@@ -1,5 +1,6 @@
 package com.nextbank.nextbank.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nextbank.nextbank.TransactionType;
 import jakarta.persistence.*;
 import lombok.*;

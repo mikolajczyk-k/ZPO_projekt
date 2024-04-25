@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class TransactionService {
@@ -55,6 +58,24 @@ public class TransactionService {
         transaction.setDate(LocalDateTime.now());
 
         return transactionRepository.save(transaction);
+    }
+
+
+    public List<Transaction> getTransactionsForAccount(Long accountId, LocalDate fromDate, LocalDate toDate){
+
+        LocalDateTime fromDateTime = fromDate.atStartOfDay();
+        LocalDateTime toDateTime = (toDate != null ? toDate : LocalDate.now()).atTime(LocalTime.MAX);
+
+        return transactionRepository.findTransactionsByAccountIdAndDateRange(accountId, fromDateTime, toDateTime);
+
+    }
+
+    public List<Transaction> getTransactionsForClient(Long clientId, LocalDate fromDate, LocalDate toDate){
+        LocalDateTime fromDateTime = fromDate.atStartOfDay();
+        LocalDateTime toDateTime = (toDate != null ? toDate : LocalDate.now()).atTime(LocalTime.MAX);
+
+
+        return transactionRepository.findTransactionsByClientIdAndDateRange(clientId, fromDateTime, toDateTime);
     }
 
 
