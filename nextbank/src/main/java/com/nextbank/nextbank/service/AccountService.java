@@ -25,6 +25,10 @@ public class AccountService {
         this.clientRepository = clientRepository;
     }
 
+    public Account saveAccount(Account account){
+        return accountRepository.save(account);
+    }
+
     public Account getAccountById(Long id){
         return accountRepository.findById(id).orElse(null);
     }

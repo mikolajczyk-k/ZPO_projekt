@@ -1,5 +1,6 @@
 package com.nextbank.nextbank.controller;
 
+import com.nextbank.nextbank.IBANService;
 import com.nextbank.nextbank.model.Account;
 import com.nextbank.nextbank.repository.AccountRepository;
 import com.nextbank.nextbank.service.AccountService;
@@ -20,13 +21,16 @@ import java.util.stream.Collectors;
 @RequestMapping("/accounts")
 public class AccountController {
 
-    private final AccountRepository accountRepository;
     private final AccountService accountService;
 
+    private final IBANService ibanService;
+
+
+
     @Autowired
-    public AccountController(AccountRepository accountRepository, AccountService accountService){
-        this.accountRepository = accountRepository;
+    public AccountController(AccountService accountService, IBANService ibanService){
         this.accountService = accountService;
+        this.ibanService = ibanService;
     }
 
     @Getter
@@ -61,9 +65,20 @@ public class AccountController {
 
 
     @PostMapping
-    public ResponseEntity<Account> createAccount(@RequestBody AccountCreationRequest request){
+    public ResponseEntity<AccountDTO> createAccount(@RequestBody AccountCreationRequest request){
         Account newAccount = accountService.createAccount(request.getClientId(), request.getType(), request.getInitialBalance());
-        return ResponseEntity.ok(newAccount);
+        String accountNumber =  ibanService.generateIBAN("XX");
+        newAccount.setAccountNumber(accountNumber);
+        newAccount = accountService.saveAccount(newAccount);
+
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.setId(newAccount.getId());
+        accountDTO.setType(newAccount.getType());
+        accountDTO.setAccountNumber(newAccount.getAccountNumber());
+        accountDTO.setBalance(newAccount.getBalance());
+        accountDTO.setOwnerId(newAccount.getOwner().getId());
+
+        return ResponseEntity.ok(accountDTO);
     }
 
 
