@@ -51,3 +51,9 @@
     background-color: var(--fresh_mint);
     color: white;
 }
+
+.account-tile.selected {
+    border-color: #007bff; /* Bootstrap primary color */
+    background-color: rgba(0, 123, 255, 0.1); /* Light blue background */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Subtle shadow for emphasis */
+}

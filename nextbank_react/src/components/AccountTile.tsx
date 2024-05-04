@@ -11,11 +11,20 @@ interface Props {
   isSelected: boolean;
 }
 
-const AccountTile: React.FC<Props> = ({ label, Icon, balance, isSelected }) => {
+const AccountTile: React.FC<Props> = ({
+  label,
+  Icon,
+  balance,
+  onClick,
+  isSelected,
+}) => {
   const sizedIcon = React.cloneElement(Icon, { size: "1.5em" });
+  const cardClass = isSelected
+    ? "account-tile selected text-center"
+    : "account-tile text-center";
   return (
     <Col>
-      <Card className="text-center account-tile">
+      <Card className={cardClass} onClick={onClick}>
         <Card.Header className="account-tile-header">{label}</Card.Header>
         <Card.Body>
           <Card.Text className="d-flex justify-content-between align-items-center">
