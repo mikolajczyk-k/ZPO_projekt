@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Dashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { BsCreditCard2Back } from "react-icons/bs";
+import axios from "axios";
 
 import AccountTile from "./AccountTile";
 
@@ -23,8 +24,38 @@ const accountTiles = [
 ];
 
 const AccountTileContainer: React.FC = () => {
+  const [accounts, setAccounts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/clients/1/accounts")
+      .then((response) => {
+        setAccounts(response.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to load accounts", err);
+        setError(err);
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return <p>Lodaing...</p>;
+  }
+
+  if (error) {
+    return <p>Error</p>;
+  }
   return (
-    <Container>
+    <div>
+      <pre>{JSON.stringify(accounts, null, 2)}</pre>
+    </div>
+  );
+
+  /*<Container>
       <Row>
         {accountTiles.map((tile, index) => (
           // Adjust the Col size props as needed for your design
@@ -40,8 +71,7 @@ const AccountTileContainer: React.FC = () => {
           </Col>
         ))}
       </Row>
-    </Container>
-  );
+    </Container>*/
 };
 
 export default AccountTileContainer;
