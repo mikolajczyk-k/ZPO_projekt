@@ -57,3 +57,8 @@
     background-color: rgba(0, 123, 255, 0.1); /* Light blue background */
     box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Subtle shadow for emphasis */
 }
+
+.dashboard-main-operations{
+    padding-right: 10px;
+    border-right:  1px solid;
+}

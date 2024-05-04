@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/Dashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
-import { BsCreditCard2Back, BsPiggyBank } from "react-icons/bs";
+import { BsPiggyBank } from "react-icons/bs";
 import axios from "axios";
 
 import AccountTile from "./AccountTile";
@@ -15,11 +15,16 @@ interface Account {
   ownerId: number;
 }
 
-const AccountTileContainer = () => {
+interface Props {
+  setSelectedAccountId: (id: number | null) => void;
+  selectedAccountId: number | null;
+}
+
+const AccountTileContainer: React.FC<Props> = ({
+  setSelectedAccountId,
+  selectedAccountId,
+}) => {
   const [accounts, setAccounts] = useState<Account[]>([]);
-  const [selectedAccountId, setSelectedAccountId] = useState<number | null>(
-    null
-  );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 

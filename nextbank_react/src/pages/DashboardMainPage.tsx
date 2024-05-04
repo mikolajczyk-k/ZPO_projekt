@@ -1,14 +1,18 @@
-import React from "react";
+import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/Dashboard.css";
-import { BsCreditCard2Back } from "react-icons/bs";
 
-import AccountTile from "../components/AccountTile";
 import AccountTileContainer from "../components/AccountTileContainer";
+import OperationsContainer from "../components/OperationsContainer";
+import RecentTransactionsContainer from "../components/RecentTransactionsContainer";
 
 const DashboardMain = () => {
+  const [selectedAccountId, setSelectedAccountId] = useState<number | null>(
+    null
+  );
+
   return (
     <Container className="dashboard-main-page">
       <Row className="dashboard-main-accounts">
@@ -18,8 +22,27 @@ const DashboardMain = () => {
           </Container>
         </Row>
         <Row>
-          <AccountTileContainer />
+          <AccountTileContainer
+            setSelectedAccountId={setSelectedAccountId}
+            selectedAccountId={selectedAccountId}
+          />
         </Row>
+      </Row>
+      <Row>
+        <Col className="dashboard-main-operations">
+          <Container>
+            <span>Operations: </span>
+            <OperationsContainer />
+          </Container>
+        </Col>
+        <Col className="dashboard-main-transactions">
+          <Container>
+            <span>Recent Transactions: </span>
+            <RecentTransactionsContainer
+              selectedAccountId={selectedAccountId}
+            />
+          </Container>
+        </Col>
       </Row>
     </Container>
   );
