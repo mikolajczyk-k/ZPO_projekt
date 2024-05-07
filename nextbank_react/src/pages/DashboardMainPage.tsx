@@ -36,7 +36,7 @@ const DashboardMain = () => {
         <Col className="dashboard-main-operations">
           <Container>
             <span>Operations: </span>
-            <OperationsContainer />
+            <OperationsContainer selectedAccountId={selectedAccountId} />
           </Container>
         </Col>
         <Col className="dashboard-main-transactions">

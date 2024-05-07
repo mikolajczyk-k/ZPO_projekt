@@ -53,7 +53,7 @@ const RecentTransactionItem: React.FC<Props> = ({
   return (
     <ListGroupItem>
       <span className={colorClass}>{amountText}</span> {transaction.type}
-      {transactionDetails && <span> ({transactionDetails})</span>}
+      {transactionDetails && <span> {transactionDetails}</span>}
       <span> on {transaction.date}</span>
     </ListGroupItem>
   );
