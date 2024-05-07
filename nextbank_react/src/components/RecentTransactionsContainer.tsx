@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../styles/Dashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row, Col } from "react-bootstrap";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 import axios from "axios";
+import RecentTransactionItem from "./RecentTransactionItem";
 
 interface Props {
   selectedAccountId: number | null;
@@ -11,6 +12,7 @@ interface Props {
 interface Transaction {
   id: number;
   type: string;
+  amount: number;
   donorId: number | null;
   recipientId: number | null;
   date: string;
@@ -24,21 +26,41 @@ const RecentTransactionsContainer: React.FC<Props> = ({
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8080/transactions/account/${selectedAccountId}?fromDate=2023-01-01`
-      )
-      .then((response) => {
-        setTransactions(response.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error("failed to load transactions");
-        setError(err);
-        setIsLoading(false);
-      });
-  }, []);
-  return <></>;
+    if (selectedAccountId !== null) {
+      axios
+        .get(
+          `http://localhost:8080/transactions/account/${selectedAccountId}?fromDate=2023-01-01`
+        )
+        .then((response) => {
+          setTransactions(response.data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.error("failed to load transactions");
+          setError(err);
+          setIsLoading(false);
+        });
+    } else {
+      setTransactions([]);
+      setIsLoading(false);
+    }
+  }, [selectedAccountId]);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error</p>;
+
+  const latestTransactions = transactions.slice(0, 5);
+
+  return (
+    <ListGroup>
+      {latestTransactions.map((transaction) => (
+        <RecentTransactionItem
+          selectedAccountId={selectedAccountId}
+          transaction={transaction}
+        />
+      ))}
+    </ListGroup>
+  );
 };
 
 export default RecentTransactionsContainer;

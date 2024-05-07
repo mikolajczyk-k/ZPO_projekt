@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,6 +12,10 @@ const DashboardMain = () => {
   const [selectedAccountId, setSelectedAccountId] = useState<number | null>(
     null
   );
+
+  useEffect(() => {
+    console.log("Selected Account ID:", selectedAccountId);
+  }, [selectedAccountId]);
 
   return (
     <Container className="dashboard-main-page">
