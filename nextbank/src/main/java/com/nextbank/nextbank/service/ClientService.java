@@ -1,5 +1,6 @@
 package com.nextbank.nextbank.service;
 
+import com.nextbank.nextbank.dto.AuthResponse;
 import com.nextbank.nextbank.model.Client;
 import com.nextbank.nextbank.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class ClientService {
     public Client saveClient(Client client){
         return clientRepository.save(client);
     }
+
+    public Client getClientByEmail(String email) {
+        return clientRepository.findClientByEmail(email);
+    }
+
 
 
 }

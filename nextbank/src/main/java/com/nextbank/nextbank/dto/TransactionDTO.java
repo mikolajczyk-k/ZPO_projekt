@@ -20,5 +20,4 @@ public class TransactionDTO {
     private Long donorId;
     private Long recipientId;
     private LocalDateTime date;
-
 }

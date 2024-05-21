@@ -1,19 +1,21 @@
 package com.nextbank.nextbank.controller;
 
+import com.nextbank.nextbank.dto.AuthResponse;
 import com.nextbank.nextbank.dto.AccountDTO;
 import com.nextbank.nextbank.model.Account;
 import com.nextbank.nextbank.service.AccountService;
 
 import com.nextbank.nextbank.model.Client;
 import com.nextbank.nextbank.service.ClientService;
-import com.nextbank.nextbank.repository.ClientRepository;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -51,6 +53,27 @@ public class ClientController {
 
         return ResponseEntity.ok(accountDTOS);
     }
+
+    @GetMapping("/auth/{email}/{password}")
+    public ResponseEntity<AuthResponse> getClientFromCredentials(@PathVariable("email") String email, @PathVariable("password") String password) {
+        AuthResponse r = new AuthResponse();
+        Client client = clientService.getClientByEmail(email);
+        if (client != null) {
+            r.setClientId(client.getId());
+            if(password.equals(client.getPassword())){
+                r.setSuccess(true);
+            }
+            else{
+                r.setSuccess(false);
+            }
+        }
+        else{
+            r.setClientId(null);
+            r.setSuccess(false);
+        }
+        return new ResponseEntity<>(r, HttpStatus.OK);
+    }
+
 
 
 }
