@@ -51,7 +51,7 @@ public class AccountService {
         Client client = clientOptional.get();
         Account newAccount = new Account();
         newAccount.setType(type);
-        newAccount.setBalance(initialBalance);
+        newAccount.setBalance(initialBalance != null ? initialBalance : BigDecimal.valueOf(0));
         newAccount.setOwner(client);
 
         return accountRepository.save(newAccount);

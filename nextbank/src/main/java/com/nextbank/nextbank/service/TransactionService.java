@@ -36,6 +36,7 @@ public class TransactionService {
         //donor not needed for deposit
         if (type == TransactionType.TRANSFER || type == TransactionType.WITHDRAWAL){
             donorAccount = accountRepository.findById(donorId).orElseThrow(() -> new IllegalArgumentException("Donor account not found."));
+
             if( donorAccount.getBalance().compareTo(amount) < 0){
                 throw new IllegalArgumentException("Insufficient funds in donor account.");
             }
