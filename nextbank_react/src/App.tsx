@@ -1,6 +1,9 @@
 //style
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import { AuthProvider } from "./AuthContext";
+import PrivateRoute from "./components/PrivateRoute";
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -24,7 +27,6 @@ import DashboardSettingsPage from "./pages/DashboardSettingsPage";
 import RootLayout from "./layouts/RootLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
 import HomeLayout from "./layouts/HomeLayout";
-import React from "react";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,7 +38,10 @@ const router = createBrowserRouter(
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
       </Route>
-      <Route path="/dashboard" element={<DashboardLayout />}>
+      <Route
+        path="/dashboard"
+        element={<PrivateRoute element={<DashboardLayout />} />}
+      >
         <Route index element={<DashboardMainPage />} />
         <Route path="profile" element={<DashboardProfilePage />} />
         <Route path="accounts" element={<DashboardAccountsPage />} />
@@ -50,7 +55,9 @@ const router = createBrowserRouter(
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </>
   );
 }

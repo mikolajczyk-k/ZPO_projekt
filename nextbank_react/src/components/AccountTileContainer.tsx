@@ -5,6 +5,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import { BsPiggyBank } from "react-icons/bs";
 import axios from "axios";
 
+import { useAuth } from "../AuthContext";
+
 import AccountTile from "./AccountTile";
 
 interface Account {
@@ -28,9 +30,11 @@ const AccountTileContainer: React.FC<Props> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const { userId } = useAuth();
+
   useEffect(() => {
     axios
-      .get("http://localhost:8080/clients/1/accounts")
+      .get(`http://localhost:8080/clients/${userId}/accounts`)
       .then((response) => {
         setAccounts(response.data);
         setIsLoading(false);

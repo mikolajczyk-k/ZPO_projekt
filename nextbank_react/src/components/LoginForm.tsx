@@ -3,7 +3,21 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
-const LoginForm: React.FC = () => {
+interface Props {
+  email: string;
+  setEmail: (email: string) => void;
+  password: string;
+  setPassword: (password: string) => void;
+  handleSubmit: (e: React.FormEvent) => void;
+}
+
+const LoginForm: React.FC<Props> = ({
+  email,
+  setEmail,
+  password,
+  setPassword,
+  handleSubmit,
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -23,15 +37,26 @@ const LoginForm: React.FC = () => {
               borderRadius: ".25rem",
               color: "#fff",
             }}
+            onSubmit={handleSubmit}
           >
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </Form.Group>
 
             <div className="d-grid gap-2">
