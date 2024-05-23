@@ -81,6 +81,19 @@ public class AccountController {
         return ResponseEntity.ok(accountDTO);
     }
 
+    @GetMapping("/getIdByAccountNumber/{accountNumber}")
+    public ResponseEntity<Long> getIdByAccountNumber(@PathVariable String accountNumber){
+        Account account = accountService.getAccountByAccountNumber(accountNumber);
+
+        if(account == null){
+            return ResponseEntity.ok(null);
+        }
+        else {
+            Long accountId = account.getId();
+            return ResponseEntity.ok(accountId);
+        }
+    }
+
 
 
 

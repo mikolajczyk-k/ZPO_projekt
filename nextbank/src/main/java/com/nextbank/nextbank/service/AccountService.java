@@ -57,5 +57,9 @@ public class AccountService {
         return accountRepository.save(newAccount);
     }
 
+    public Account getAccountByAccountNumber(String accountNumber){
+        return accountRepository.findAccountByAccountNumber(accountNumber);
+    }
+
 
 }

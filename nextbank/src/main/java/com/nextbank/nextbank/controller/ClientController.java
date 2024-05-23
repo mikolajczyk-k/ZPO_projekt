@@ -60,7 +60,7 @@ public class ClientController {
         Client client = clientService.getClientByEmail(email);
         if (client != null) {
             r.setClientId(client.getId());
-            if(password.equals(client.getPassword())){
+            if (password.equals(client.getPassword())){
                 r.setSuccess(true);
             }
             else{
