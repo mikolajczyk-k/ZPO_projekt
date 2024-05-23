@@ -20,11 +20,13 @@ interface Account {
 interface Props {
   setSelectedAccountId: (id: number | null) => void;
   selectedAccountId: number | null;
+  refresh: boolean;
 }
 
 const AccountTileContainer: React.FC<Props> = ({
   setSelectedAccountId,
   selectedAccountId,
+  refresh,
 }) => {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +46,7 @@ const AccountTileContainer: React.FC<Props> = ({
         setError(err);
         setIsLoading(false);
       });
-  }, []);
+  }, [refresh]);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading accounts</p>;

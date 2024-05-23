@@ -7,6 +7,7 @@ import RecentTransactionItem from "./RecentTransactionItem";
 
 interface Props {
   selectedAccountId: number | null;
+  refresh: boolean;
 }
 
 interface Transaction {
@@ -20,6 +21,7 @@ interface Transaction {
 
 const RecentTransactionsContainer: React.FC<Props> = ({
   selectedAccountId,
+  refresh,
 }) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -44,12 +46,12 @@ const RecentTransactionsContainer: React.FC<Props> = ({
       setTransactions([]);
       setIsLoading(false);
     }
-  }, [selectedAccountId]);
+  }, [selectedAccountId, refresh]);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
-  const latestTransactions = transactions.slice(0, 5);
+  const latestTransactions = transactions.slice(0, 5).reverse();
 
   return (
     <ListGroup>

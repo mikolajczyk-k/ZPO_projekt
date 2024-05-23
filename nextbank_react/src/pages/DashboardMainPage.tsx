@@ -13,6 +13,8 @@ const DashboardMain = () => {
     null
   );
 
+  const [refresh, setRefresh] = useState<boolean>(false);
+
   useEffect(() => {
     console.log("Selected Account ID:", selectedAccountId);
   }, [selectedAccountId]);
@@ -29,6 +31,7 @@ const DashboardMain = () => {
           <AccountTileContainer
             setSelectedAccountId={setSelectedAccountId}
             selectedAccountId={selectedAccountId}
+            refresh={refresh}
           />
         </Row>
       </Row>
@@ -36,7 +39,10 @@ const DashboardMain = () => {
         <Col className="dashboard-main-operations">
           <Container>
             <span>Operations: </span>
-            <OperationsContainer selectedAccountId={selectedAccountId} />
+            <OperationsContainer
+              selectedAccountId={selectedAccountId}
+              setRefresh={setRefresh}
+            />
           </Container>
         </Col>
         <Col className="dashboard-main-transactions">
@@ -44,6 +50,7 @@ const DashboardMain = () => {
             <span>Recent Transactions: </span>
             <RecentTransactionsContainer
               selectedAccountId={selectedAccountId}
+              refresh={refresh}
             />
           </Container>
         </Col>
