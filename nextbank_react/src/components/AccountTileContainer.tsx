@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import "../styles/Dashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
-import { BsPiggyBank } from "react-icons/bs";
+import { BsPiggyBank, BsCreditCard2Back } from "react-icons/bs";
+import { AiOutlineBank } from "react-icons/ai";
 import axios from "axios";
 
 import { useAuth } from "../AuthContext";
@@ -55,14 +56,25 @@ const AccountTileContainer: React.FC<Props> = ({
     setSelectedAccountId(accountId);
   };
 
+  const getIconByAccountType = (type: string) => {
+    switch (type) {
+      case "CHECKING":
+        return <BsCreditCard2Back />;
+      case "SAVINGS":
+        return <BsPiggyBank />;
+      default:
+        return <AiOutlineBank />;
+    }
+  };
+
   return (
     <div className="container">
       <div className="row">
         {accounts.map((account) => (
           <AccountTile
             key={account.id}
-            label={account.type + " Account"}
-            Icon={<BsPiggyBank />} // Example icon for all tiles
+            label={`${account.type} Account (${account.accountNumber})`}
+            Icon={getIconByAccountType(account.type)} // Example icon for all tiles
             balance={account.balance ? account.balance.toFixed(2) : "N/A"}
             onClick={() => handleAccountClick(account.id)}
             isSelected={account.id === selectedAccountId}

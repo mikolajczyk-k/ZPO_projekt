@@ -5,7 +5,10 @@ import { Container, Row, Col, Form, Button, Table } from "react-bootstrap";
 
 interface Account {
   id: number;
+  type: string;
   accountNumber: string;
+  balance: number;
+  ownerId: number;
 }
 
 interface Transaction {
@@ -20,39 +23,94 @@ interface Transaction {
 const DashboardHistoryPage: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [accounts, setAccounts] = useState<Account[]>([]); // List of account IDs
+  const [filteredTransactions, setFilteredTransactions] = useState<
+    Transaction[]
+  >([]);
   const [selectedAccount, setSelectedAccount] = useState<number | "all">("all");
   const [fromDate, setFromDate] = useState<string>("");
   const [toDate, setToDate] = useState<string>("");
   const [type, setType] = useState<string>("");
   const { userId } = useAuth();
 
-  //fetching accounts
+  // Fetch accounts and transactions for the logged-in user
   useEffect(() => {
+    // Replace with the actual user ID
+
     axios
       .get(`http://localhost:8080/clients/${userId}/accounts`)
-      .then((response) =>
-        setAccounts(response.data.map((account: any) => account.id))
-      )
+      .then((response) => setAccounts(response.data))
       .catch((error) => console.error("Failed to fetch accounts", error));
+
+    axios
+      .get(`http://localhost:8080/transactions/client/${userId}`)
+      .then((response) => {
+        setTransactions(response.data);
+        setFilteredTransactions(response.data); // Initialize filtered transactions
+      })
+      .catch((error) => console.error("Failed to fetch transactions", error));
   }, []);
 
-  const fetchTransactions = () => {
-    const params: any = {
-      accountId: selectedAccount !== "all" ? selectedAccount : undefined,
-      fromDate: fromDate || undefined,
-      toDate: toDate || undefined,
-      type: type || undefined,
-    };
-    axios
-      .get(`http://localhost:8080/transactions/client/${userId}`, { params })
-      .then((response) => setTransactions(response.data))
-      .catch((error) => console.error("Failed to fetch transactions", error));
+  // Filter transactions based on selected filters
+  const filterTransactions = () => {
+    let filtered = transactions;
+
+    if (selectedAccount !== "all") {
+      filtered = filtered.filter(
+        (transaction) =>
+          transaction.donorId === selectedAccount ||
+          transaction.recipientId === selectedAccount
+      );
+    }
+
+    if (fromDate) {
+      filtered = filtered.filter(
+        (transaction) => new Date(transaction.date) >= new Date(fromDate)
+      );
+    }
+
+    if (toDate) {
+      filtered = filtered.filter(
+        (transaction) => new Date(transaction.date) <= new Date(toDate)
+      );
+    }
+
+    if (type) {
+      filtered = filtered.filter((transaction) => transaction.type === type);
+    }
+
+    setFilteredTransactions(filtered);
   };
 
-  // Fetch transactions on initial load and when filters change
+  // Apply filters whenever any filter changes
   useEffect(() => {
-    fetchTransactions();
-  }, [selectedAccount, fromDate, toDate, type]);
+    filterTransactions();
+  }, [selectedAccount, fromDate, toDate, type, transactions]);
+
+  const getAccountNumber = (accountId: number | null) => {
+    const account = accounts.find((account) => account.id === accountId);
+    return account ? account.accountNumber : "N/A";
+  };
+
+  const getTransactionColor = (transaction: Transaction) => {
+    if (transaction.donorId && transaction.recipientId) {
+      if (
+        accounts.some((account) => account.id === transaction.donorId) &&
+        accounts.some((account) => account.id === transaction.recipientId)
+      ) {
+        return "yellow";
+      } else if (
+        accounts.some((account) => account.id === transaction.recipientId)
+      ) {
+        return "green";
+      } else {
+        return "red";
+      }
+    } else if (transaction.recipientId) {
+      return "green";
+    } else {
+      return "red";
+    }
+  };
 
   return (
     <Container>
@@ -68,12 +126,16 @@ const DashboardHistoryPage: React.FC = () => {
             <Form.Control
               as="select"
               value={selectedAccount}
-              onChange={(e) => setSelectedAccount(e.target.value as any)}
+              onChange={(e) =>
+                setSelectedAccount(
+                  e.target.value === "all" ? "all" : parseInt(e.target.value)
+                )
+              }
             >
               <option value="all">All</option>
               {accounts.map((account) => (
                 <option key={account.id} value={account.id}>
-                  Account {account.accountNumber}
+                  {account.accountNumber}
                 </option>
               ))}
             </Form.Control>
@@ -115,32 +177,28 @@ const DashboardHistoryPage: React.FC = () => {
           </Form.Group>
         </Col>
       </Row>
-      <Row>
-        <Col>
-          <Button onClick={fetchTransactions}>Apply Filters</Button>
-        </Col>
-      </Row>
+      <Row></Row>
       <Row className="mt-3">
         <Col>
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Type</th>
                 <th>Amount</th>
-                <th>Donor ID</th>
-                <th>Recipient ID</th>
+                <th>Donor Account</th>
+                <th>Recipient Account</th>
                 <th>Date</th>
               </tr>
             </thead>
             <tbody>
-              {transactions.map((transaction) => (
+              {filteredTransactions.map((transaction) => (
                 <tr key={transaction.id}>
-                  <td>{transaction.id}</td>
                   <td>{transaction.type}</td>
-                  <td>{transaction.amount}PLN</td>
-                  <td>{transaction.donorId}</td>
-                  <td>{transaction.recipientId}</td>
+                  <td style={{ color: getTransactionColor(transaction) }}>
+                    {transaction.amount}PLN
+                  </td>
+                  <td>{getAccountNumber(transaction.donorId)}</td>
+                  <td>{getAccountNumber(transaction.recipientId)}</td>
                   <td>{transaction.date}</td>
                 </tr>
               ))}
