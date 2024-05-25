@@ -1,6 +1,7 @@
 package com.nextbank.nextbank.service;
 
 import com.nextbank.nextbank.TransactionType;
+import com.nextbank.nextbank.controller.TransactionController;
 import com.nextbank.nextbank.model.Account;
 import com.nextbank.nextbank.model.Transaction;
 import com.nextbank.nextbank.repository.AccountRepository;
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -22,10 +24,13 @@ public class TransactionService {
 
     private final AccountRepository accountRepository;
 
+    private final AccountService accountService;
+
     @Autowired
-    public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository){
+    public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository, AccountService accountService){
         this.transactionRepository = transactionRepository;
         this.accountRepository = accountRepository;
+        this.accountService = accountService;
     }
 
     @Transactional
@@ -62,22 +67,19 @@ public class TransactionService {
     }
 
 
-    public List<Transaction> getTransactionsForAccount(Long accountId, LocalDate fromDate, LocalDate toDate){
+    public List<Transaction> getTransactionsForAccount(Long accountId, LocalDate fromDate, LocalDate toDate){ //Dashboard Main
 
         LocalDateTime fromDateTime = fromDate.atStartOfDay();
         LocalDateTime toDateTime = (toDate != null ? toDate : LocalDate.now()).atTime(LocalTime.MAX);
 
-        return transactionRepository.findTransactionsByAccountIdAndDateRange(accountId, fromDateTime, toDateTime);
+        //getting and sorting transactions
+        List<Transaction> transactions = transactionRepository.findTransactionsByAccountIdAndDateRange(accountId, fromDateTime, toDateTime);
+        transactions.sort(Comparator.comparing(Transaction::getDate).reversed());
 
+        return transactions;
     }
 
-    public List<Transaction> getTransactionsForClient(Long clientId, LocalDate fromDate, LocalDate toDate){
-        LocalDateTime fromDateTime = fromDate.atStartOfDay();
-        LocalDateTime toDateTime = (toDate != null ? toDate : LocalDate.now()).atTime(LocalTime.MAX);
 
-
-        return transactionRepository.findTransactionsByClientIdAndDateRange(clientId, fromDateTime, toDateTime);
-    }
 
 
 }

@@ -20,6 +20,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +33,7 @@ public class TransactionController {
 
     private final TransactionService transactionService;
     private final AccountService accountService;
+
 
     @Autowired
     public TransactionController(TransactionService transactionService, AccountService accountService){
@@ -89,20 +94,31 @@ public class TransactionController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate){
 
-            List<Transaction> transactions = transactionService.getTransactionsForClient(clientId, fromDate, toDate);
-            List<TransactionDTO> transactionsDTOS = transactions.stream().map(transaction -> {
+        List <Transaction> clientTransactions = new ArrayList<Transaction>();
+        List <Account> accounts = accountService.getAccountsByOwnerId(clientId);
 
-                TransactionDTO dto = new TransactionDTO();
-                dto.setId(transaction.getId());
-                dto.setType(transaction.getType());
-                dto.setAmount(transaction.getAmount());
-                dto.setDonorId(transaction.getDonor() != null ? transaction.getDonor().getOwner().getId() : null);
-                dto.setRecipientId(transaction.getRecipient() != null ? transaction.getRecipient().getOwner().getId() : null);
-                dto.setDate(transaction.getDate());
+        for(Account account : accounts){
+            List<Transaction> accountTransactions = transactionService.getTransactionsForAccount(account.getId(), fromDate, toDate);
+            clientTransactions.addAll(accountTransactions);
+        }
+        //sorting by date
+        clientTransactions.sort(Comparator.comparing(Transaction::getDate).reversed());
 
-                return dto;
-            }).toList();
+        List<TransactionDTO> transactionsDTOS = clientTransactions.stream().map(transaction -> {
+
+            TransactionDTO dto = new TransactionDTO();
+            dto.setId(transaction.getId());
+            dto.setType(transaction.getType());
+            dto.setAmount(transaction.getAmount());
+            dto.setDonorId(transaction.getDonor() != null ? transaction.getDonor().getId() : null);
+            dto.setRecipientId(transaction.getRecipient() != null ? transaction.getRecipient().getId() : null);
+            dto.setDate(transaction.getDate());
+
+            return dto;
+        }).toList();
 
         return ResponseEntity.ok(transactionsDTOS);
     }
+
+
 }

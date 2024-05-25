@@ -14,7 +14,6 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     @Query("SELECT t FROM Transaction t WHERE (t.donor.id = :accountId OR t.recipient.id = :accountId) AND t.date >= :fromDate AND t.date <= :toDate")
     List<Transaction> findTransactionsByAccountIdAndDateRange(@Param("accountId") Long accountId, @Param("fromDate") LocalDateTime fromDate, @Param("toDate") LocalDateTime toDate);
-    @Query("SELECT t FROM Transaction t WHERE (t.donor.owner.id = :clientId OR t.recipient.owner.id = :clientId) AND t.date >= :fromDate AND t.date <= :toDate")
-    List<Transaction> findTransactionsByClientIdAndDateRange(@Param("clientId") Long clientId, @Param("fromDate") LocalDateTime fromDate, @Param("toDate") LocalDateTime toDate);
+
 
 }
