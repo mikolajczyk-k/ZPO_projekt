@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.Comparator;
 import java.util.List;
 
@@ -69,7 +67,7 @@ public class TransactionService {
 
     public List<Transaction> getTransactionsForAccount(Long accountId, LocalDate fromDate, LocalDate toDate){ //Dashboard Main
 
-        LocalDateTime fromDateTime = fromDate.atStartOfDay();
+        LocalDateTime fromDateTime = (fromDate != null ? fromDate.atStartOfDay() : LocalDate.of(2023, 1, 1).atTime(LocalTime.MAX));
         LocalDateTime toDateTime = (toDate != null ? toDate : LocalDate.now()).atTime(LocalTime.MAX);
 
         //getting and sorting transactions

@@ -68,10 +68,11 @@ public class TransactionController {
     @GetMapping("/account/{accountId}")
     public ResponseEntity<List<TransactionDTO>> getTransactionsForAccount(
             @PathVariable Long accountId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate){
 
         List<Transaction> transactions = transactionService.getTransactionsForAccount(accountId, fromDate, toDate);
+
         List<TransactionDTO> transactionsDTOS = transactions.stream().map(transaction -> {
 
             TransactionDTO dto = new TransactionDTO();
@@ -91,7 +92,7 @@ public class TransactionController {
     @GetMapping("/client/{clientId}")
     public ResponseEntity<List<TransactionDTO>> getTransactionsForClient(
             @PathVariable Long clientId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate){
 
         List <Transaction> clientTransactions = new ArrayList<Transaction>();
