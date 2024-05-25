@@ -1,6 +1,12 @@
 import React from "react";
 import "../styles/Dashboard.css";
 import { ListGroupItem } from "react-bootstrap";
+import { format } from "date-fns";
+
+interface Account {
+  id: number;
+  accountNumber: string;
+}
 
 interface Transaction {
   id: number;
@@ -14,12 +20,19 @@ interface Transaction {
 interface Props {
   selectedAccountId: number | null;
   transaction: Transaction;
+  accounts: Account[];
 }
 
 const RecentTransactionItem: React.FC<Props> = ({
   transaction,
   selectedAccountId,
+  accounts,
 }) => {
+  const getAccountNumber = (accountId: number | null) => {
+    const account = accounts.find((account) => account.id === accountId);
+    return account ? account.accountNumber : "N/A";
+  };
+
   let amountText;
   let transactionDetails = "";
   let colorClass = "";
@@ -29,11 +42,15 @@ const RecentTransactionItem: React.FC<Props> = ({
       if (transaction.donorId == selectedAccountId) {
         amountText = `- ${transaction.amount.toFixed(2)}PLN`;
         colorClass = "text-danger";
-        transactionDetails = `To recipient ${transaction.recipientId}`;
+        transactionDetails = `To recipient ${getAccountNumber(
+          transaction.recipientId
+        )}`;
       } else {
         amountText = `+ ${transaction.amount.toFixed(2)}PLN`;
         colorClass = "text-success";
-        transactionDetails = `From donor ${transaction.donorId}`;
+        transactionDetails = `From donor ${getAccountNumber(
+          transaction.donorId
+        )}`;
       }
       break;
     case "DEPOSIT":
@@ -50,11 +67,14 @@ const RecentTransactionItem: React.FC<Props> = ({
       amountText = `$${transaction.amount.toFixed(2)}`;
       break;
   }
+
+  const formattedDate = format(new Date(transaction.date), "dd-MM-yyyy HH:mm"); //formatting Date
+
   return (
     <ListGroupItem>
       <span className={colorClass}>{amountText}</span> {transaction.type}
       {transactionDetails && <span> {transactionDetails}</span>}
-      <span> on {transaction.date}</span>
+      <span> on {formattedDate}</span>
     </ListGroupItem>
   );
 };

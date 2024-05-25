@@ -8,6 +8,7 @@ import RecentTransactionItem from "./RecentTransactionItem";
 interface Props {
   selectedAccountId: number | null;
   refresh: boolean;
+  accounts: Account[];
 }
 
 interface Transaction {
@@ -19,8 +20,17 @@ interface Transaction {
   date: string;
 }
 
+interface Account {
+  id: number;
+  accountNumber: string;
+  type: string;
+  balance: number;
+  ownerId: number;
+}
+
 const RecentTransactionsContainer: React.FC<Props> = ({
   selectedAccountId,
+  accounts,
   refresh,
 }) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -57,8 +67,10 @@ const RecentTransactionsContainer: React.FC<Props> = ({
     <ListGroup>
       {latestTransactions.map((transaction) => (
         <RecentTransactionItem
+          key={transaction.id}
           selectedAccountId={selectedAccountId}
           transaction={transaction}
+          accounts={accounts}
         />
       ))}
     </ListGroup>
