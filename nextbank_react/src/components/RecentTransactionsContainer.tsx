@@ -61,7 +61,7 @@ const RecentTransactionsContainer: React.FC<Props> = ({
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
-  const latestTransactions = transactions.slice(0, 5).reverse();
+  const latestTransactions = transactions.slice(0, 5);
 
   return (
     <ListGroup>

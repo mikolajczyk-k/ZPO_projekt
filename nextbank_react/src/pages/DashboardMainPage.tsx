@@ -49,6 +49,7 @@ const DashboardMain = () => {
             setSelectedAccountId={setSelectedAccountId}
             selectedAccountId={selectedAccountId}
             refresh={refresh}
+            accounts={accounts}
           />
         </Row>
       </Row>

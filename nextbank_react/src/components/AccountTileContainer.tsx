@@ -22,6 +22,7 @@ interface Props {
   setSelectedAccountId: (id: number | null) => void;
   selectedAccountId: number | null;
   refresh: boolean;
+  accounts: Account[];
 }
 
 const AccountTileContainer: React.FC<Props> = ({

@@ -191,17 +191,29 @@ const DashboardHistoryPage: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredTransactions.map((transaction) => (
-                <tr key={transaction.id}>
-                  <td>{transaction.type}</td>
-                  <td style={{ color: getTransactionColor(transaction) }}>
-                    {transaction.amount}PLN
-                  </td>
-                  <td>{getAccountNumber(transaction.donorId)}</td>
-                  <td>{getAccountNumber(transaction.recipientId)}</td>
-                  <td>{transaction.date}</td>
-                </tr>
-              ))}
+              {filteredTransactions.map((transaction) => {
+                const cellColor = getTransactionColor(transaction);
+                return (
+                  <tr key={transaction.id}>
+                    <td>{transaction.id}</td>
+                    <td>{transaction.type}</td>
+                    <td style={{ backgroundColor: cellColor }}>
+                      {transaction.amount.toFixed(2)} PLN
+                    </td>
+                    <td>{getAccountNumber(transaction.donorId)}</td>
+                    <td>{getAccountNumber(transaction.recipientId)}</td>
+                    <td>
+                      {new Date(transaction.date).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </Table>
         </Col>
