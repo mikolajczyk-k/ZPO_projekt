@@ -22,7 +22,7 @@ interface Transaction {
 
 const DashboardHistoryPage: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [accounts, setAccounts] = useState<Account[]>([]); // List of account IDs
+  const [accounts, setAccounts] = useState<Account[]>([]);
   const [filteredTransactions, setFilteredTransactions] = useState<
     Transaction[]
   >([]);
@@ -34,8 +34,6 @@ const DashboardHistoryPage: React.FC = () => {
 
   // Fetch accounts and transactions for the logged-in user
   useEffect(() => {
-    // Replace with the actual user ID
-
     axios
       .get(`http://localhost:8080/clients/${userId}/accounts`)
       .then((response) => setAccounts(response.data))
@@ -48,7 +46,7 @@ const DashboardHistoryPage: React.FC = () => {
         setFilteredTransactions(response.data); // Initialize filtered transactions
       })
       .catch((error) => console.error("Failed to fetch transactions", error));
-  }, []);
+  }, [userId]);
 
   // Filter transactions based on selected filters
   const filterTransactions = () => {
@@ -77,6 +75,17 @@ const DashboardHistoryPage: React.FC = () => {
     if (type) {
       filtered = filtered.filter((transaction) => transaction.type === type);
     }
+
+    // Filter out duplicate own transfers
+    const seenTransactions = new Set();
+    filtered = filtered.filter((transaction) => {
+      const key = `${transaction.id}-${transaction.type}`;
+      if (seenTransactions.has(key)) {
+        return false;
+      }
+      seenTransactions.add(key);
+      return true;
+    });
 
     setFilteredTransactions(filtered);
   };
@@ -177,12 +186,12 @@ const DashboardHistoryPage: React.FC = () => {
           </Form.Group>
         </Col>
       </Row>
-      <Row></Row>
       <Row className="mt-3">
         <Col>
           <Table striped bordered hover>
             <thead>
               <tr>
+                <th>ID</th>
                 <th>Type</th>
                 <th>Amount</th>
                 <th>Donor Account</th>
@@ -193,8 +202,9 @@ const DashboardHistoryPage: React.FC = () => {
             <tbody>
               {filteredTransactions.map((transaction) => {
                 const cellColor = getTransactionColor(transaction);
+                const uniqueKey = `${transaction.id}-${transaction.type}`;
                 return (
-                  <tr key={transaction.id}>
+                  <tr key={uniqueKey}>
                     <td>{transaction.id}</td>
                     <td>{transaction.type}</td>
                     <td style={{ backgroundColor: cellColor }}>
